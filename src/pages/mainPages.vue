@@ -1,18 +1,31 @@
-<!-- <template>
+<template>
     <v-container class="content">
         <div class="block">
         <h1>ПоисКин</h1>
         <img src="@/components/img/futsmall.png">
         </div>
-        <v-toolbar
-        dense
-        floating>
-        <v-text-field
-            prepend-icon="mdi-magnify"
-            hide-details
-            single-line
-        ></v-text-field>
-        </v-toolbar>
+        <div>
+          <v-toolbar dense floating>
+            <v-text-field 
+              v-model="searchQuery"
+              @input="searchMovie(searchQuery)"
+              prepend-icon="mdi-magnify" 
+              hide-details 
+              single-line
+            ></v-text-field> 
+          </v-toolbar>
+          <label>
+            Сортировать по:
+            <select v-model="sortBy" @change="sortMovies">
+              <option value="year">Год</option>
+              <option value="duration">Хронометраж</option>
+              <option value="rating">Рейтинг</option>
+            </select>
+            <button @click="toggleSortDirection">
+              {{ sortDirection === 'asc' ? 'По возрастанию' : 'По убыванию' }}
+            </button>
+          </label>
+        </div>
     </v-container>
     <v-container>
         <v-row>
@@ -30,60 +43,45 @@
 import moviesData from '@/data/kinopoisk-1.json';
 
 export default {
-    data() {
-        return {
-            movies: []
-        };
+  data() {
+    return {
+      movies: [],
+      searchQuery: '',
+      sortBy: '',
+      sortDirection: 'asc'
+    };
+  },
+  mounted() {
+    this.movies = moviesData.docs;
+  },
+  methods: {
+    goToMoviePage(movie) {
+      this.$router.push({ name: 'movie', params: { id: movie.id } });
     },
-    mounted() {
-        this.movies = moviesData.docs;
-    },
-    methods: {
-        goToMoviePage(movie) {
-            this.$router.push({ name: 'movie', params: { id: movie.id } });
-        }
-    }
 
-};
-</script> -->
-<template>
-    <v-container class="content">
-      <div class="block">
-        <h1>ПоискКин</h1>
-        <img src="@/components/img/futsmall.png">
-      </div>
-      <v-toolbar dense floating>
-        <v-text-field prepend-icon="mdi-magnify" hide-details single-line></v-text-field>
-      </v-toolbar>
-      <v-row>
-        <v-col v-for="movie in movies" :key="movie.id" cols="12" sm="6" md="4">
-          <moviePages :movie="movie" @click="goToMoviePage(movie.id)" />
-        </v-col>
-      </v-row>
-    </v-container>
-  </template>
-  
-  <script>
-  import moviePages from '@/pages/moviePages.vue'; // импортируем дочерний компонент
-  import moviesData from '@/data/kinopoisk-1.json';
-  
-  export default {
-    data() {
-      return {
-        movies: []
-      };
+    searchMovie(query) {
+      const searchTerm = query.toLowerCase();
+      this.movies = moviesData.docs.filter(movie => movie.name.toLowerCase().includes(searchTerm));
     },
-    mounted() {
-      this.movies = moviesData.docs;
+
+    sortMovies() {
+      this.movies.sort((a, b) => {
+        let sortModifier = (this.sortDirection === 'asc') ? 1 : -1;
+
+        if (this.sortBy === 'year') {
+          return sortModifier * (a.year - b.year);
+        } else if (this.sortBy === 'duration') {
+          return sortModifier * (a.movieLength - b.movieLength);
+        } else if (this.sortBy === 'rating') {
+          return sortModifier * (b.rating.kp - a.rating.kp);
+        }
+        return 0;
+      });
     },
-    methods: {
-      goToMoviePage(id) {
-        this.$router.push({ name: 'movie', params: { id } });
-      }
-    },
-    components: {
-      moviePages // регистрируем дочерний компонент
+    toggleSortDirection() {
+      this.sortDirection = (this.sortDirection === 'asc') ? 'desc' : 'asc';
+      this.sortMovies();
     }
-  };
-  </script>
-  
+  }
+};
+</script>
