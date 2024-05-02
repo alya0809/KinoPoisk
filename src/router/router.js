@@ -8,6 +8,7 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPages from '@/pages/mainPages.vue'
+import favoritesPage from '@/pages/favoritesPage.vue'
 import moviePages from '@/pages/moviePages.vue'
 // import SplitPage from '@/pages/SplitPage.vue'
 // import aboutPage from '@/pages/aboutPage.vue'
@@ -23,6 +24,11 @@ const routes = [
     path: '/movie/:id',
     name: 'movie',
     component: moviePages,
+  },
+  {
+    path: '/favorites',
+    name: 'favorites',
+    component: favoritesPage,
   }
   // {
   //   path: '/split',

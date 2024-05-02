@@ -8,7 +8,7 @@
           </router-link>
         </v-toolbar-title>
       </template>
-      <v-btn><router-link to="/bookmarks" class="router">Избранное</router-link></v-btn>
+      <v-btn><router-link to="/favorites" class="router">Избранное</router-link></v-btn>
       <v-btn><router-link to="/my_ratings" class="router">Мои оценки</router-link></v-btn>
     </v-app-bar>
     <v-main> 
