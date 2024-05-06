@@ -41,6 +41,9 @@
 
 <script>
 import moviesData from '@/data/kinopoisk-1.json';
+import searchMovie from '@/services/searchMovie.js';
+import sortMovies from '@/services/sortMovies.js';
+import toggleSortDirection from '@/services/toggleSortDirection.js'
 
 export default {
   data() {
@@ -56,30 +59,17 @@ export default {
   },
   methods: {
     goToMoviePage(movie) {
-      this.$router.push({ name: 'movie', params: { id: movie.id } });
+      this.$goToMoviePage(movie);
     },
-
     searchMovie(query) {
-      const searchTerm = query.toLowerCase();
-      this.movies = moviesData.docs.filter(movie => movie.name.toLowerCase().includes(searchTerm));
+      this.movies = searchMovie(query, moviesData);
     },
 
     sortMovies() {
-      this.movies.sort((a, b) => {
-        let sortModifier = (this.sortDirection === 'asc') ? 1 : -1;
-
-        if (this.sortBy === 'year') {
-          return sortModifier * (a.year - b.year);
-        } else if (this.sortBy === 'duration') {
-          return sortModifier * (a.movieLength - b.movieLength);
-        } else if (this.sortBy === 'rating') {
-          return sortModifier * (b.rating.kp - a.rating.kp);
-        }
-        return 0;
-      });
+      this.movies = sortMovies(this.movies, this.sortBy, this.sortDirection);
     },
     toggleSortDirection() {
-      this.sortDirection = (this.sortDirection === 'asc') ? 'desc' : 'asc';
+      this.sortDirection = toggleSortDirection(this.sortDirection);
       this.sortMovies();
     }
   }

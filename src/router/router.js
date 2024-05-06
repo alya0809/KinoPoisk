@@ -10,7 +10,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainPages from '@/pages/mainPages.vue'
 import favoritesPage from '@/pages/favoritesPage.vue'
 import moviePages from '@/pages/moviePages.vue'
-// import SplitPage from '@/pages/SplitPage.vue'
+import scorePage from '@/pages/scorePage.vue'
 // import aboutPage from '@/pages/aboutPage.vue'
 // import examplePage from '@/pages/examplePage.vue'
 
@@ -29,12 +29,12 @@ const routes = [
     path: '/favorites',
     name: 'favorites',
     component: favoritesPage,
+  },
+  {
+    path: '/my_ratings',
+    name: scorePage,
+    component: scorePage
   }
-  // {
-  //   path: '/split',
-  //   name: SplitPage,
-  //   component: SplitPage
-  // },
   // {
   //   path: '/about',
   //   name: aboutPage,

@@ -7,6 +7,17 @@
     addToFavorites(movie)" :icon="isFavorite ? 'mdi-bookmark-off-outline' : 'mdi-bookmark-outline'"></v-btn>
     <p v-if="!movie">Фильм не найден</p>
   </div>
+  <div class="text-center">
+    <v-rating
+      v-model="rating"
+      half-increments
+      hover
+      length="10"
+      @input="saveRating"
+    ></v-rating>
+    <pre>{{ rating }}</pre>
+  </div>
+  
   <v-container>
     <v-expansion-panels v-model="panel" multiple>
       <v-expansion-panel>
@@ -53,7 +64,9 @@ export default {
       watchabilities: null,
       movieLength: null,
       alternativeName: null,
-      isFavorite: false
+      isFavorite: false,
+      rating: null,
+      isRating: false
     };
   },
   mounted() {
@@ -65,6 +78,7 @@ export default {
     this.movieLength = this.movie.movieLength;
     this.alternativeName = this.movie.alternativeName;
     this.checkIsFavorite();
+    this.checkIsRating();
   },
   methods: {
     addToFavorites(movie) {
@@ -86,6 +100,31 @@ export default {
     checkIsFavorite() {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
       this.isFavorite = favorites.some(item => item.id.toString() === this.movie.id.toString());
+    },
+    checkIsRating() {
+      const savedRating = localStorage.getItem('movieRating');
+      if (savedRating) {
+        this.rating = parseInt(savedRating, 10);
+        this.isRating = true;
+      }
+    },
+    saveRating(movieId, rating) {
+        localStorage.setItem(rating{movieId}, rating);
+
+        // Затем проверяем, есть ли объект ratedMovies в localStorage
+        let ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || {};
+
+        // Добавляем фильм и его оценку в объект ratedMovies
+        ratedMovies[movieId] = {
+            rating: rating,
+            // Здесь можешь добавить другие данные о фильме, которые тебе важны
+        };
+
+        // Сохраняем объект ratedMovies в localStorage
+        localStorage.setItem('ratedMovies', JSON.stringify(ratedMovies));
+
+        // Оповещаем пользователя об успешном сохранении оценки
+        alert(Оценка ${rating} для фильма с ID ${movieId} успешно сохранена!);
     }
   }
 }

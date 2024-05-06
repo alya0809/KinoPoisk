@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h2>Избранные фильмы</h2>
+      <h2>Оцененные фильмы</h2>
       <v-container>
         <div>
           <label>
@@ -18,12 +18,11 @@
       </v-container>
       <v-container>
         <v-row class="justify-center align-center">
-          <v-col v-for="movie in favoriteMovies" :key="movie.id" cols="10" class="mb-2">
+          <v-col v-for="movie in scoreMovies" :key="movie.id" cols="10" class="mb-2">
             <v-card class="movie-card">
               <img :src="movie.poster.url" alt="Movie Poster" style="max-width: 20%;">
               <div class="movie-details">
                 <p >{{ movie.name }}</p>
-                <v-btn @click="removeFromFavorites(movie)">Удалить из избранного</v-btn>
               </div>
             </v-card>
           </v-col>
@@ -45,7 +44,7 @@
         };
       },
       mounted() {
-        this.loadFavoriteMovies();
+        this.loadScoreMovies();
       },
       
       methods: {
@@ -53,18 +52,11 @@
           this.$goToMoviePage(movie);
         },
         
-        loadFavoriteMovies() {
-          this.favoriteMovies = JSON.parse(localStorage.getItem('favorites')) || [];
-        },
-        removeFromFavorites(movie) {
-          const index = this.favoriteMovies.findIndex(favMovie => favMovie.id === movie.id);
-          if (index !== -1) {
-            this.favoriteMovies.splice(index, 1);
-            localStorage.setItem('favorites', JSON.stringify(this.favoriteMovies));
-          }
+        loadScoreMovies() {
+          this.scoreMovies = JSON.parse(localStorage.getItem('movieRating')) || [];
         },
         sortMovies() {
-          this.favoriteMovies = sortMovies(this.favoriteMovies, this.sortBy, this.sortDirection);
+          this.scoreMovies = sortMovies(this.scoreMovies, this.sortBy, this.sortDirection);
         },
         toggleSortDirection() {
           this.sortDirection = toggleSortDirection(this.sortDirection);
