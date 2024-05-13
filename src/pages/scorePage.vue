@@ -53,7 +53,10 @@
         },
         
         loadScoreMovies() {
-          this.scoreMovies = JSON.parse(localStorage.getItem('movieRating')) || [];
+          this.scoreMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
+        },
+        loadScores() {
+          this.score = JSON.parse(localStorage.getItem('movieRating')) || [];
         },
         sortMovies() {
           this.scoreMovies = sortMovies(this.scoreMovies, this.sortBy, this.sortDirection);

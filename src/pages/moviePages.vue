@@ -7,16 +7,17 @@
     addToFavorites(movie)" :icon="isFavorite ? 'mdi-bookmark-off-outline' : 'mdi-bookmark-outline'"></v-btn>
     <p v-if="!movie">Фильм не найден</p>
   </div>
-  <div class="text-center">
-    <v-rating
-      v-model="rating"
-      half-increments
-      hover
-      length="10"
-      @input="saveRating"
-    ></v-rating>
-    <pre>{{ rating }}</pre>
+  <div class="text-center"> 
+    <v-rating 
+      v-model="movieRating" 
+      half-increments 
+      hover 
+      length="10" 
+    ></v-rating> 
+    <pre>{{ movieRating }}</pre> 
   </div>
+  <v-btn density="default" @click="saveRating" :icon="'mdi-check-circle-outline'"></v-btn> 
+
   
   <v-container>
     <v-expansion-panels v-model="panel" multiple>
@@ -26,7 +27,7 @@
           <h2>Оригинальное название: <span>{{alternativeName}}</span></h2>
           <h2>Описание</h2>
           <p v-if="movie" v-html="movie.description"></p>
-          <div class="rating">
+          <div class="ratingе">
             <v-icon icon='mdi-account-star-outline'></v-icon>
             <span>{{ ratingKp }} KP</span>
             <v-icon icon='mdi-account-star'></v-icon>
@@ -65,7 +66,7 @@ export default {
       movieLength: null,
       alternativeName: null,
       isFavorite: false,
-      rating: null,
+      movieRating: 0,
       isRating: false
     };
   },
@@ -77,8 +78,8 @@ export default {
     this.watchabilities = this.movie.watchability.items;
     this.movieLength = this.movie.movieLength;
     this.alternativeName = this.movie.alternativeName;
-    this.checkIsFavorite();
     this.checkIsRating();
+    this.checkIsFavorite();
   },
   methods: {
     addToFavorites(movie) {
@@ -87,6 +88,7 @@ export default {
         favorites.push(movie);
         localStorage.setItem('favorites', JSON.stringify(favorites));
         this.isFavorite = true;
+        
       } else {
         alert('Этот фильм уже добавлен в избранное');
       }
@@ -102,32 +104,29 @@ export default {
       this.isFavorite = favorites.some(item => item.id.toString() === this.movie.id.toString());
     },
     checkIsRating() {
-      const savedRating = localStorage.getItem('movieRating');
+      const savedRating = localStorage.getItem('ratedMovies');
       if (savedRating) {
-        this.rating = parseInt(savedRating, 10);
-        this.isRating = true;
+        const ratedMovies = JSON.parse(savedRating);
+        const ratedMovie = ratedMovies.find(item => item.id === this.movie.id);
+        if (ratedMovie) {
+          this.movieRating = ratedMovie.rating;
+          this.isRating = true;
+        }
       }
     },
-    saveRating(movieId, rating) {
-        localStorage.setItem(rating{movieId}, rating);
-
-        // Затем проверяем, есть ли объект ratedMovies в localStorage
-        let ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || {};
-
-        // Добавляем фильм и его оценку в объект ratedMovies
-        ratedMovies[movieId] = {
-            rating: rating,
-            // Здесь можешь добавить другие данные о фильме, которые тебе важны
-        };
-
-        // Сохраняем объект ratedMovies в localStorage
+    saveRating() {
+      let ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
+      if (!ratedMovies.find(item => item.id === this.movie.id)) {
+        ratedMovies.push({ id: this.movie.id, rating: this.movieRating }); // Сохраняем только id и рейтинг
         localStorage.setItem('ratedMovies', JSON.stringify(ratedMovies));
-
-        // Оповещаем пользователя об успешном сохранении оценки
-        alert(Оценка ${rating} для фильма с ID ${movieId} успешно сохранена!);
+        localStorage.setItem('movieRating', parseInt(this.movieRating, 10));
+        this.isRating = true;
+      }
     }
-  }
+
+  },
 }
+
 </script>
 
 <style lang="scss" scoped>
