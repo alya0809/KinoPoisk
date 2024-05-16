@@ -10,6 +10,7 @@ import { goToMoviePage } from '@/services/goToMoviePage.js';
 
 // Composables
 import { createApp } from 'vue'
+import '@/styles/styles.css'
 
 const app = createApp(App)
 

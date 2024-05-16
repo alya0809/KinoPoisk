@@ -1,23 +1,28 @@
 <template>
-  <div>
-    <h1 v-if="movie" v-text="movie.name"></h1>
-    <p v-if="movie" v-text="movie.shortDescription"></p>
-    <img v-if="movie" :src="movie.poster.url" alt="Movie Poster">
-    <v-btn density="default" @click="isFavorite ? deleteFromFavorites(movie) : 
-    addToFavorites(movie)" :icon="isFavorite ? 'mdi-bookmark-off-outline' : 'mdi-bookmark-outline'"></v-btn>
+  <v-container>
+    <div class="movie-details">
+        <img v-if="movie" :src="movie.poster.url" alt="Movie Poster">
+        <div>
+            <h1 v-if="movie" v-text="movie.name"></h1>
+            <p v-if="movie" v-text="movie.shortDescription"></p>
+            <v-rating class="text-center"
+              v-model="movieRating" 
+              half-increments 
+              hover 
+              length="10" 
+              size="small"
+              @click="saveRating"
+            ></v-rating> 
+            <div class="d-flex justify-center">
+              <pre class="text-center">{{ movieRating }}</pre> 
+            </div>
+            <v-btn density="default" @click="isFavorite ? deleteFromFavorites(movie) : 
+            addToFavorites(movie)" :icon="isFavorite ? 'mdi-bookmark-off-outline' : 'mdi-bookmark-outline'"></v-btn>
+            
+        </div>
+    </div>
     <p v-if="!movie">Фильм не найден</p>
-  </div>
-  <div class="text-center"> 
-    <v-rating 
-      v-model="movieRating" 
-      half-increments 
-      hover 
-      length="10" 
-    ></v-rating> 
-    <pre>{{ movieRating }}</pre> 
-  </div>
-  <v-btn density="default" @click="saveRating" :icon="'mdi-check-circle-outline'"></v-btn> 
-
+</v-container>
   
   <v-container>
     <v-expansion-panels v-model="panel" multiple>
@@ -50,6 +55,7 @@
       </v-expansion-panel>
     </v-expansion-panels>
   </v-container>
+
 </template>
 
 <script>
@@ -78,8 +84,8 @@ export default {
     this.watchabilities = this.movie.watchability.items;
     this.movieLength = this.movie.movieLength;
     this.alternativeName = this.movie.alternativeName;
-    this.checkIsRating();
     this.checkIsFavorite();
+    this.checkIsRating();
   },
   methods: {
     addToFavorites(movie) {
@@ -102,6 +108,7 @@ export default {
     checkIsFavorite() {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
       this.isFavorite = favorites.some(item => item.id.toString() === this.movie.id.toString());
+      
     },
     checkIsRating() {
       const savedRating = localStorage.getItem('ratedMovies');
@@ -114,16 +121,17 @@ export default {
         }
       }
     },
-    saveRating() {
-      let ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
-      if (!ratedMovies.find(item => item.id === this.movie.id)) {
-        ratedMovies.push({ id: this.movie.id, rating: this.movieRating }); // Сохраняем только id и рейтинг
-        localStorage.setItem('ratedMovies', JSON.stringify(ratedMovies));
-        localStorage.setItem('movieRating', parseInt(this.movieRating, 10));
-        this.isRating = true;
-      }
+    saveRating() {  
+      console.log('Метод saveRating вызван!') 
+      let ratedMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];   
+      if (!ratedMovies.find(item => item.id === this.movie.id)) {   
+          ratedMovies.push({ id: this.movie.id, rating: this.rating });  // Сохраняем только id и рейтинг 
+          localStorage.setItem('ratedMovies', JSON.stringify(ratedMovies));   
+          console.log(this.movie); 
+          localStorage.setItem('movieRating', this.rating);  
+          this.isRating = true;  
+      }   
     }
-
   },
 }
 
