@@ -1,0 +1,38 @@
+<template>
+  <v-app-bar
+    :elevation="0"
+    app
+    color="#1E3046"
+  >
+    <template #prepend>
+      <v-toolbar-title>
+        <router-link
+          to="/"
+          class="router"
+        >
+          <img
+            src="@/components/img/fut.png"
+            alt="Логотип"
+            class="logo"
+          >
+        </router-link>
+      </v-toolbar-title>
+    </template>
+    <v-btn>
+      <router-link
+        to="/favorites"
+        class="router"
+      >
+        Избранное
+      </router-link>
+    </v-btn>
+    <v-btn>
+      <router-link
+        to="/my_ratings"
+        class="router"
+      >
+        Мои оценки
+      </router-link>
+    </v-btn>
+  </v-app-bar>
+</template>
