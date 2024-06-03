@@ -4,46 +4,37 @@
       Оцененные фильмы
     </h2>
     <v-container>
-      <div>
-        <label>
-          Сортировать по:
-          <select
-            v-model="sortBy"
-            @change="sortMovies"
-          >
-            <option value="year">
-              Год
-            </option>
-            <option value="duration">
-              Хронометраж
-            </option>
-            <option value="rating">
-              Рейтинг
-            </option>
-          </select>
-          <button @click="toggleSortDirection">
-            {{ sortDirection === 'asc' ? 'По возрастанию' : 'По убыванию' }}
-          </button>
-        </label>
-      </div>
-    </v-container>
-    <v-container>
       <v-row class="justify-center align-center">
         <v-col
-          v-for="movie in scoreMovies"
-          :key="movie.id"
+          v-for="movie in ratedMovies"
+          :key="movie.movie.id"
           cols="10"
           class="mb-2"
         >
-          <v-card class="movie-card">
+          <v-card
+            class="movie-card"
+            @click="goToMoviePage(movie.movie)"
+          >
             <img
-              :src="movie.poster.url"
+              :src="movie.movie.poster.url"
               alt="Movie Poster"
               style="max-width: 20%;"
             >
+            <v-rating
+              v-model="movie.rating"
+              class="text-center"
+              half-increments
+              readonly
+              hover
+              length="10"
+              size="small"
+            />
+            <div class="d-flex justify-center">
+              <pre class="text-center">{{ movie.rating }}</pre>
+            </div>
             <div class="movie-details">
               <p>
-                {{ movie.name }}
+                {{ movie.movie.name }}
               </p>
             </div>
           </v-card>
@@ -53,43 +44,42 @@
   </div>
 </template>
 
-  <script>
-    import sortMovies from '@/services/sortMovies.js';
-    import toggleSortDirection from '@/services/toggleSortDirection.js'
+<script>
+  export default {
+    data() {
+      return {
+        ratedMovies: [],
+        sortBy: '',
+        sortDirection: 'asc',
+      };
+    },
+    mounted() {
+      this.loadRatedMovies();
+    },
 
-    export default {
-      data() {
-        return {
-          favoriteMovies: [],
-          sortBy: '',
-          sortDirection: 'asc'
-        };
+    methods: {
+      goToMoviePage(movie) {
+        this.$goToMoviePage(movie);
       },
-      mounted() {
-        this.loadScoreMovies();
+      loadRatedMovies() {
+        const scoredRatings = JSON.parse(localStorage.getItem("movieRatings")) || [];
+        this.ratedMovies = scoredRatings.map(item => ({ movie: item.movie, rating: item.rating }));
+        console.log('Загруженные оцененные фильмы:', this.ratedMovies);
       },
+      loadSavedRating() {
+        const movieId = this.movie.id;
+        const movieRatings = JSON.parse(localStorage.getItem('movieRatings')) || {};
+        const ratingList = movieRatings['movieRating'] || [];
 
-      methods: {
-        goToMoviePage(movie) {
-          this.$goToMoviePage(movie);
-        },
+        const savedRating = ratingList.find(rating => rating.movieId === movieId);
 
-        loadScoreMovies() {
-          this.scoreMovies = JSON.parse(localStorage.getItem('ratedMovies')) || [];
-        },
-        // loadScores() {
-        //   this.score = JSON.parse(localStorage.getItem('movieRating')) || [];
-        // },
-        sortMovies() {
-          this.scoreMovies = sortMovies(this.scoreMovies, this.sortBy, this.sortDirection);
-        },
-        toggleSortDirection() {
-          this.sortDirection = toggleSortDirection(this.sortDirection);
-          this.sortMovies();
+        if (savedRating) {
+          this.movieRating = savedRating.rating;
         }
       }
     }
-  </script>
+  }
+</script>
 
   <style lang="scss" scoped>
   .movie-card {

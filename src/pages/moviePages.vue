@@ -145,7 +145,7 @@ export default {
     this.movieLength = this.movie.movieLength;
     this.alternativeName = this.movie.alternativeName;
     this.checkIsFavorite();
-    this.checkIsRating();
+    this.loadSavedRating();
   },
   methods: {
     addToFavorites(movie) {
@@ -172,31 +172,40 @@ export default {
         (item) => item.id.toString() === this.movie.id.toString()
       );
     },
-    checkIsRating() {
-      const savedRating = localStorage.getItem("ratedMovies");
-      if (savedRating) {
-        const ratedMovies = JSON.parse(savedRating);
-        const ratedMovie = ratedMovies.find(
-          (item) => item.id === this.movie.id
-        );
-        if (ratedMovie) {
-          this.movieRating = ratedMovie.rating;
-          this.isRating = true;
-        }
-      }
-    },
     saveRating() {
-      console.log("Метод saveRating вызван!");
-      let ratedMovies = JSON.parse(localStorage.getItem("ratedMovies")) || [];
-      if (!ratedMovies.find((item) => item.id === this.movie.id)) {
-        ratedMovies.push({ id: this.movie.id, rating: this.rating });
-        localStorage.setItem("ratedMovies", JSON.stringify(ratedMovies));
-        console.log(this.movie);
-        localStorage.setItem("movieRating", this.rating);
-        this.isRating = true;
+      let movieRatings = JSON.parse(localStorage.getItem('movieRatings')) || [];
+
+      const ratingList = movieRatings || [];
+      const existingRatingIndex = ratingList.findIndex(rating => rating.movieId === this.movie.id);
+      if (existingRatingIndex !== -1) {
+          ratingList[existingRatingIndex] = {
+              movieId: this.movie.id,
+              movie: this.movie,
+              rating: this.movieRating
+          };
+      } else {
+          ratingList.push({
+              movieId: this.movie.id,
+              movie: this.movie,
+              rating: this.movieRating
+          });
       }
+      movieRatings = ratingList;
+      localStorage.setItem('movieRatings', JSON.stringify(movieRatings));
+      console.log('Рейтинг для фильма с ID ' + this.movie.id + ' сохранен в localStorage:', this.movieRating);
     },
-  },
+    loadSavedRating() {
+      const movieId = this.movie.id;
+      const movieRatings = JSON.parse(localStorage.getItem('movieRatings')) || [];
+      const ratingList = movieRatings || [];
+
+      const savedRating = ratingList.find(rating => rating.movieId === movieId);
+
+      if (savedRating) {
+        this.movieRating = savedRating.rating;
+      }
+    }
+  }
 };
 </script>
 

@@ -11,7 +11,7 @@
           class="router"
         >
           <img
-            src="@/components/img/fut.png"
+            src="/fut.png"
             alt="Логотип"
             class="logo"
           >

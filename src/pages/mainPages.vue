@@ -4,7 +4,7 @@
       <h1>
         ПоисКин
       </h1>
-      <img src="@/components/img/futsmall.png">
+      <img src="/futsmall.png">
     </div>
     <div>
       <v-toolbar
