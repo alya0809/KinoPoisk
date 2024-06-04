@@ -1,31 +1,34 @@
 <template>
-  <div>
-    <h2>
+  <div class="background">
+    <h2 class="head-text">
       Избранные фильмы
     </h2>
-    <v-container>
-      <div>
-        <label>
-          Сортировать по:
-          <select
-            v-model="sortBy"
-            @change="sortMovies"
-          >
-            <option value="year">
-              Год
-            </option>
-            <option value="duration">
-              Хронометраж
-            </option>
-            <option value="rating">
-              Рейтинг
-            </option>
-          </select>
-          <button @click="toggleSortDirection">
-            {{ sortDirection === "asc" ? "По возрастанию" : "По убыванию" }}
-          </button>
-        </label>
-      </div>
+    <v-container class="sort">
+      <label>
+        Сортировать по:
+        <select
+          v-model="sortBy"
+          @change="sortMovies"
+        >
+          <option value="year">
+            Год
+          </option>
+          <option value="duration">
+            Хронометраж
+          </option>
+          <option value="rating">
+            Рейтинг
+          </option>
+        </select>
+        <v-btn
+          :prepend-icon="sortDirection === 'asc' ?
+            'mdi-arrow-up-circle-outline' : 'mdi-arrow-down-circle-outline'"
+          variant="plain"
+          @click="toggleSortDirection"
+        >
+          {{ sortDirection === 'asc' ? 'По возрастанию' : 'По убыванию' }}
+        </v-btn>
+      </label>
     </v-container>
     <v-container>
       <v-row class="justify-center align-center">
@@ -35,14 +38,19 @@
           cols="10"
           class="mb-2"
         >
-          <v-card class="movie-card">
+          <v-card
+            class="movie-card"
+            @click="goToMoviePage(movie)"
+          >
             <img
               :src="movie.poster.url"
               alt="Movie Poster"
               style="max-width: 20%"
             >
-            <div class="movie-details">
-              <p>{{ movie.name }}</p>
+            <div class="movie-favorites">
+              <p>
+                {{ movie.name }}
+              </p>
               <v-btn @click="removeFromFavorites(movie)">
                 Удалить из избранного
               </v-btn>
@@ -62,14 +70,12 @@ export default {
   data() {
     return {
       favoriteMovies: [],
-      sortBy: "",
       sortDirection: "asc",
     };
   },
   mounted() {
     this.loadFavoriteMovies();
   },
-
   methods: {
     goToMoviePage(movie) {
       this.$goToMoviePage(movie);
@@ -101,16 +107,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.movie-card {
-  border: 1px solid #ccc;
-  width: 100%;
-  height: 10%;
-  margin: 0 auto;
-}
-
-.movie-details {
-  margin-top: 10px;
-}
-</style>

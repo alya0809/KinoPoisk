@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h2>
+  <div class="background">
+    <h2 class="head-text">
       Оцененные фильмы
     </h2>
     <v-container>
@@ -80,16 +80,3 @@
     }
   }
 </script>
-
-  <style lang="scss" scoped>
-  .movie-card {
-    border: 1px solid #ccc;
-    width: 100%; /* Занимает 95% ширины экрана */
-    height: 10%; /* Высота рамки 20 пикселей */
-    margin: 0 auto; /* Центрируем рамку по горизонтали */
-  }
-
-  .movie-details {
-    margin-top: 10px;
-  }
-  </style>

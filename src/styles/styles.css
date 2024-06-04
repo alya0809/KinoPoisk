@@ -1,4 +1,18 @@
-@charset "UTF-8";
+.head-text, .sort {
+  font-family: Roboto, Museo Slab, Calluna, Droid Sans, Helvetica, FF Meta Serif;
+}
+
+.movie-card {
+  border: 1px solid #586E88;
+  width: 100%;
+  height: 10%;
+  margin: 0 auto;
+}
+
+.movie-favorites {
+  margin-top: 10px;
+}
+
 .movie-details {
   display: flex;
   align-items: flex-start;
@@ -25,10 +39,40 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("path/to/your/image.jpg"); /* Путь к изображению из movie.poster.url */
+  background-image: url("path/to/your/image.jpg");
   background-size: cover;
-  filter: blur(10px); /* Устанавливаем уровень размытия */
-  z-index: -1; /* Помещает фон под остальное содержимое */
+  filter: blur(10px);
+  z-index: -1;
+}
+
+.sort {
+  font-size: 20px;
+  margin: 15px 16%;
+}
+.sort select option {
+  color: white;
+  background-color: #1E3046;
+}
+.sort select {
+  border: 2px solid #586E88;
+}
+
+.head-text {
+  font-size: 50px;
+  text-align: center;
+}
+
+.background {
+  background-color: #0a203b;
+}
+
+.width {
+  align-self: center;
+  width: 75%;
+}
+
+.block {
+  text-align: center;
 }
 
 /*# sourceMappingURL=styles.css.map */
