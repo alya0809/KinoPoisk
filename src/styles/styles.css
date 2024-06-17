@@ -47,7 +47,7 @@
 
 .sort {
   font-size: 20px;
-  margin: 15px 16%;
+  margin: 5px 16%;
 }
 .sort select option {
   color: white;
@@ -73,6 +73,18 @@
 
 .block {
   text-align: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.router {
+  text-decoration: none;
+  color: inherit;
 }
 
 /*# sourceMappingURL=styles.css.map */

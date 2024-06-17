@@ -1,16 +1,16 @@
 <template>
   <div class="background">
     <v-container class="content">
-      <div class="block d-flex align-center justify-content-center text-center">
+      <v-container class="d-flex align-center justify-content-center text-center header">
         <h1 class="head-text">
           ПоисКин
         </h1>
         <img src="/futsmall.png">
-      </div>
+      </v-container>
       <div>
         <v-container class="d-flex justify-center align-center">
           <v-toolbar
-            class=" background width"
+            class="background width"
             dense
             floating
           >
@@ -56,7 +56,7 @@
     <v-container>
       <v-row>
         <v-col
-          v-for="movie in movies"
+          v-for="movie in paginatedMovies"
           :key="movie.id"
           cols="2"
         >
@@ -73,12 +73,21 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-container
+      v-if="!searchQuery"
+      class="text-center"
+    >
+      <v-pagination
+        v-model="currentPage"
+        :length="5"
+        rounded="circle"
+      />
+    </v-container>
   </div>
 </template>
 
 <script>
 import moviesData from "@/data/kinopoisk-1.json";
-import searchMovie from "@/services/searchMovie.js";
 import sortMovies from "@/services/sortMovies.js";
 import toggleSortDirection from "@/services/toggleSortDirection.js";
 
@@ -86,22 +95,33 @@ export default {
   data() {
     return {
       movies: [],
+      allMoviesData: [],
       searchQuery: "",
       sortBy: "",
       sortDirection: "asc",
+      currentPage: 1,
+      moviesPerPage: 24,
     };
+  },
+  computed: {
+    paginatedMovies() {
+      const startIndex = (this.currentPage - 1) * this.moviesPerPage;
+      return this.movies.slice(startIndex, startIndex + this.moviesPerPage);
+    },
   },
   mounted() {
     this.movies = moviesData.docs;
+    this.allMoviesData = moviesData.docs;
   },
   methods: {
     goToMoviePage(movie) {
       this.$goToMoviePage(movie);
     },
     searchMovie(query) {
-      this.movies = searchMovie(query, moviesData);
+      const searchTerm = query.toLowerCase();
+      this.movies = this.allMoviesData.filter(movie => movie.name.toLowerCase().includes(searchTerm));
+      this.currentPage = 1;
     },
-
     sortMovies() {
       this.movies = sortMovies(this.movies, this.sortBy, this.sortDirection);
     },

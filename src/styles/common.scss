@@ -52,7 +52,7 @@ $base-color:#1E3046;
 }
  .sort {
     @include text(20px);
-    margin: 15px 16%;
+    margin: 5px 16%;
     select option {
         color: white; 
         background-color: $base-color;
@@ -76,3 +76,13 @@ $base-color:#1E3046;
  .block {
     text-align: center;
  }
+ .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+ }
+ .router {
+    text-decoration: none; 
+    color: inherit;
+}

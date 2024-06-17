@@ -35,26 +35,36 @@
         <v-col
           v-for="movie in favoriteMovies"
           :key="movie.id"
-          cols="10"
+          cols="5"
           class="mb-2"
         >
           <v-card
-            class="movie-card"
+            class="movie-card background"
             @click="goToMoviePage(movie)"
           >
-            <img
-              :src="movie.poster.url"
-              alt="Movie Poster"
-              style="max-width: 20%"
-            >
-            <div class="movie-favorites">
-              <p>
-                {{ movie.name }}
-              </p>
-              <v-btn @click="removeFromFavorites(movie)">
-                Удалить из избранного
-              </v-btn>
-            </div>
+            <v-row>
+              <v-col cols="6">
+                <img
+                  :src="movie.poster.url"
+                  alt="Movie Poster"
+                  style="max-width: 100%"
+                >
+              </v-col>
+              <v-col cols="6">
+                <div class="movie-favorites">
+                  <p>
+                    {{ movie.name }}
+                  </p>
+                  <v-row align="end">
+                    <v-col cols="12">
+                      <v-icon @click="removeFromFavorites(movie)">
+                        mdi-trash-can-outline
+                      </v-icon>
+                    </v-col>
+                  </v-row>
+                </div>
+              </v-col>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
