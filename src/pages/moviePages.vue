@@ -1,119 +1,124 @@
 <template>
-  <v-container>
-    <div class="movie-details">
-      <img
-        v-if="movie"
-        :src="movie.poster.url"
-        alt="Movie Poster"
-      >
-      <div>
-        <h1
+  <div class="background">
+    <v-container>
+      <div class="movie-details">
+        <img
           v-if="movie"
-          v-text="movie.name"
-        />
-        <p
-          v-if="movie"
-          v-text="movie.shortDescription"
-        />
-        <v-rating
-          v-model="movieRating"
-          class="text-center"
-          half-increments
-          hover
-          length="10"
-          size="small"
-          @click="saveRating"
-        />
-        <div class="d-flex justify-center">
-          <pre class="text-center">{{ movieRating }}</pre>
-        </div>
-        <v-btn
-          density="default"
-          :icon="
-            isFavorite ? 'mdi-bookmark-off-outline' : 'mdi-bookmark-outline'
-          "
-          @click="
-            isFavorite ? deleteFromFavorites(movie) : addToFavorites(movie)
-          "
-        />
-      </div>
-    </div>
-    <p v-if="!movie">
-      Фильм не найден
-    </p>
-  </v-container>
-
-  <v-container>
-    <v-expansion-panels
-      v-model="panel"
-      multiple
-    >
-      <v-expansion-panel>
-        <v-expansion-panel-title>
-          Больше информации о фильме
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <h2>
-            Оригинальное название:
-            <span>
-              {{ alternativeName }}
-            </span>
-          </h2>
-          <h2>
-            Описание
-          </h2>
+          :src="movie.poster.url"
+          alt="Movie Poster"
+        >
+        <div>
+          <h1
+            v-if="movie"
+            v-text="movie.name"
+          />
           <p
             v-if="movie"
-            v-text="movie.description"
+            v-text="movie.shortDescription"
           />
-          <div class="ratinge">
-            <v-icon icon="mdi-account-star-outline" />
-            <span>
-              {{ ratingKp }}
-              KP
-            </span>
-            <v-icon icon="mdi-account-star" />
-            <span>
-              {{ ratingImdb }}
-              IMDb
-            </span>
+          <v-rating
+            v-model="movieRating"
+            class="text-center"
+            half-increments
+            hover
+            length="10"
+            size="small"
+            @click="saveRating"
+          />
+          <div class="d-flex justify-center">
+            <pre class="text-center">{{ movieRating }}</pre>
           </div>
-          <div>
-            Хронометраж фильма:
-            {{ movieLength }} мин.
-          </div>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-      <v-expansion-panel>
-        <v-expansion-panel-title>
-          Где посмотреть
-        </v-expansion-panel-title>
-        <v-expansion-panel-text v-if="watchabilities">
-          <div
-            v-for="item in watchabilities"
-            :key="item._id"
-          >
-            <a
-              :href="item.url"
-              target="_blank"
-            >
-              <img
-                :src="item.logo.url"
-                alt="logo"
-                style="width: 50px; height: 50px"
-              >
+          <v-btn
+            density="default"
+            :icon="
+              isFavorite ? 'mdi-bookmark-off-outline' : 'mdi-bookmark-outline'
+            "
+            @click="
+              isFavorite ? deleteFromFavorites(movie) : addToFavorites(movie)
+            "
+          />
+        </div>
+      </div>
+      <p v-if="!movie">
+        Фильм не найден
+      </p>
+    </v-container>
+    <v-container>
+      <v-expansion-panels
+        v-model="panel"
+        multiple
+      >
+        <v-expansion-panel class="background">
+          <v-expansion-panel-title>
+            Больше информации о фильме
+          </v-expansion-panel-title>
+          <v-expansion-panel-text class="background">
+            <h2>
+              Оригинальное название:
               <span>
-                {{ item.name }}
+                {{ alternativeName }}
               </span>
-            </a>
-          </div>
-        </v-expansion-panel-text>
-        <v-expansion-panel-text v-else>
-          Нет информации о платформах для просмотра фильма
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-    </v-expansion-panels>
-  </v-container>
+            </h2>
+            <h2>
+              Описание
+            </h2>
+            <p
+              v-if="movie"
+              v-text="movie.description"
+            />
+            <div class="rating">
+              <v-icon icon="mdi-account-star-outline" />
+              <span>
+                {{ ratingKp }}
+                KP
+              </span>
+              <v-icon icon="mdi-account-star" />
+              <span>
+                {{ ratingImdb }}
+                IMDb
+              </span>
+            </div>
+            <div>
+              Хронометраж фильма:
+              {{ movieLength }} мин.
+            </div>
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+        <v-expansion-panel class="background">
+          <v-expansion-panel-title>
+            Где посмотреть
+          </v-expansion-panel-title>
+          <v-expansion-panel-text
+            v-if="watchabilities"
+            class="background"
+          >
+            <div
+              v-for="item in watchabilities"
+              :key="item._id"
+            >
+              <a
+                :href="item.url"
+                target="_blank"
+                class="router d-flex align-center justify-content-center text-center"
+              >
+                <img
+                  :src="item.logo.url"
+                  alt="logo"
+                  class="rote"
+                >
+                <span>
+                  {{ item.name }}
+                </span>
+              </a>
+            </div>
+          </v-expansion-panel-text>
+          <v-expansion-panel-text v-else>
+            Нет информации о платформах для просмотра фильма
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -179,17 +184,17 @@ export default {
       const existingRatingIndex = ratingList.findIndex(rating => rating.movieId === this.movie.id);
       if (existingRatingIndex !== -1) {
           ratingList[existingRatingIndex] = {
-              movieId: this.movie.id,
-              movie: this.movie,
-              rating: this.movieRating
+            movieId: this.movie.id,
+            movie: this.movie,
+            rating: this.movieRating
           };
-      } else {
+        } else {
           ratingList.push({
-              movieId: this.movie.id,
-              movie: this.movie,
-              rating: this.movieRating
+            movieId: this.movie.id,
+            movie: this.movie,
+            rating: this.movieRating
           });
-      }
+        }
       movieRatings = ratingList;
       localStorage.setItem('movieRatings', JSON.stringify(movieRatings));
       console.log('Рейтинг для фильма с ID ' + this.movie.id + ' сохранен в localStorage:', this.movieRating);
@@ -208,4 +213,3 @@ export default {
   }
 };
 </script>
-

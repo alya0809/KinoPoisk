@@ -1,5 +1,8 @@
 <template>
-  <v-footer color="#1E3046">
+  <v-footer
+    color="#1E3046"
+    class="footer"
+  >
     <v-row
       justify="center"
       no-gutters

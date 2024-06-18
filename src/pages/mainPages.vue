@@ -29,6 +29,7 @@
             Сортировать по:
             <select
               v-model="sortBy"
+              class="text-center"
               @change="sortMovies"
             >
               <option value="year">
@@ -67,7 +68,7 @@
             <img
               :src="movie.poster.url"
               alt="Movie Poster"
-              style="max-width: 100%"
+              style="width: 100%"
             >
           </v-card>
         </v-col>

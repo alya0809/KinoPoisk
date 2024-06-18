@@ -8,6 +8,7 @@
         Сортировать по:
         <select
           v-model="sortBy"
+          class="text-center"
           @change="sortMovies"
         >
           <option value="year">
@@ -35,31 +36,47 @@
         <v-col
           v-for="movie in favoriteMovies"
           :key="movie.id"
-          cols="5"
-          class="mb-2"
+          cols="10"
         >
           <v-card
-            class="movie-card background"
+            class="movie-card"
             @click="goToMoviePage(movie)"
           >
             <v-row>
-              <v-col cols="6">
+              <v-col cols="3">
                 <img
                   :src="movie.poster.url"
                   alt="Movie Poster"
                   style="max-width: 100%"
                 >
               </v-col>
-              <v-col cols="6">
+              <v-col cols="5">
                 <div class="movie-favorites">
-                  <p>
+                  <h2>
                     {{ movie.name }}
+                  </h2>
+                  <p>
+                    {{ movie.shortDescription }}
                   </p>
-                  <v-row align="end">
-                    <v-col cols="12">
-                      <v-icon @click="removeFromFavorites(movie)">
-                        mdi-trash-can-outline
-                      </v-icon>
+                  <div class="rating">
+                    <span class="rating-value">
+                      <v-icon icon="mdi-account-star-outline" />
+                      {{ movie.rating.kp }}
+                      KP
+                    </span>
+                    <span class="rating-value">
+                      <v-icon icon="mdi-account-star" />
+                      {{ movie.rating.imdb }}
+                      IMDb
+                    </span>
+                  </div>
+                  <v-row>
+                    <v-col>
+                      <v-btn
+                        color="#0a203b"
+                        icon="mdi-trash-can-outline"
+                        @click.stop="removeFromFavorites(movie)"
+                      />
                     </v-col>
                   </v-row>
                 </div>
