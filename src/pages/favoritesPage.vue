@@ -47,7 +47,6 @@
                 <img
                   :src="movie.poster.url"
                   alt="Movie Poster"
-                  style="max-width: 100%"
                 >
               </v-col>
               <v-col cols="5">
@@ -75,6 +74,7 @@
                       <v-btn
                         color="#0a203b"
                         icon="mdi-trash-can-outline"
+                        style="margin-top: 3%;"
                         @click.stop="removeFromFavorites(movie)"
                       />
                     </v-col>

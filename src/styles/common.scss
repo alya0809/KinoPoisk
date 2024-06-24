@@ -13,25 +13,40 @@ $base-color:#1E3046;
     width: 100%; 
     height: 10%; 
     margin: 0 auto; 
+    img {
+        max-width: 100%;
+    }
   }
-
+.main-card {
+    width: 180px;
+    height: 280px;
+    background-color: #0a203b;
+    border: 1px solid #586E88;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
 .movie-favorites {
     margin-top: 10px;
     h2 {
         margin-bottom: 20px;
     }
-    v-rating {
-        margin-left: -10px;
-    }
-}
-.back-movie {
-    background-image: url('/public/ba.jpg');
-    background-size: cover;
+
 }
 .my-rate {
     margin-left: -10px;
 }
-
+.score-movie {
+    position: relative;
+    left: 63%;
+    transform: translateX(-50%);
+}
+.margin-up {
+    margin-top: 5px;
+    margin-left: 2px;
+}
 .movie-details {
     display: flex;
     align-items: flex-start;
@@ -45,8 +60,7 @@ $base-color:#1E3046;
         margin-top: 10px;
         p {
             max-width: 80%;
-        }
-            
+        }  
         }
         v-btn {
             margin-top: 40px;
@@ -107,4 +121,6 @@ $base-color:#1E3046;
     text-decoration: none; 
     color: inherit;
 }
-
+.indent {
+    margin-bottom: 10%;
+}

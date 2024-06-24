@@ -18,18 +18,18 @@
           />
           <v-rating
             v-model="movieRating"
-            class="text-center"
+            class="text-center my-rate"
             half-increments
             hover
             length="10"
             size="small"
             @click="saveRating"
           />
-          <div class="d-flex justify-center">
-            <pre class="text-center">{{ movieRating }}</pre>
-          </div>
+          <p class="score-movie">
+            {{ movieRating }}
+          </p>
           <v-btn
-            density="default"
+            color="#0a203b"
             :icon="
               isFavorite ? 'mdi-bookmark-off-outline' : 'mdi-bookmark-outline'
             "
@@ -67,24 +67,24 @@
               v-text="movie.description"
             />
             <div class="rating">
-              <v-icon icon="mdi-account-star-outline" />
-              <span>
+              <span class="rating-value">
+                <v-icon icon="mdi-account-star-outline" />
                 {{ ratingKp }}
                 KP
               </span>
-              <v-icon icon="mdi-account-star" />
-              <span>
+              <span class="rating-value">
+                <v-icon icon="mdi-account-star" />
                 {{ ratingImdb }}
                 IMDb
               </span>
             </div>
-            <div>
-              Хронометраж фильма:
+            <div class="margin-up">
+              <v-icon icon="mdi-clock-outline" />
               {{ movieLength }} мин.
             </div>
           </v-expansion-panel-text>
         </v-expansion-panel>
-        <v-expansion-panel class="background">
+        <v-expansion-panel class="background indent">
           <v-expansion-panel-title>
             Где посмотреть
           </v-expansion-panel-title>

@@ -20,7 +20,6 @@
                 <img
                   :src="movie.movie.poster.url"
                   alt="Movie Poster"
-                  style="max-width: 90%;"
                 >
               </v-col>
               <v-col cols="5">

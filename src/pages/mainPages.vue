@@ -62,13 +62,12 @@
           cols="2"
         >
           <v-card
-            style="max-width: 110%"
+            class="main-card"
             @click="goToMoviePage(movie)"
           >
             <img
               :src="movie.poster.url"
               alt="Movie Poster"
-              style="width: 100%"
             >
           </v-card>
         </v-col>
