@@ -4,7 +4,7 @@
 
 .movie-card {
   background-color: #0a203b;
-  border: 1px solid #586E88;
+  border: 1px solid #586e88;
   width: 100%;
   height: 10%;
   margin: 0 auto;
@@ -17,7 +17,7 @@
   width: 180px;
   height: 280px;
   background-color: #0a203b;
-  border: 1px solid #586E88;
+  border: 1px solid #586e88;
 }
 .main-card img {
   width: 100%;
@@ -50,8 +50,7 @@
 .movie-details {
   display: flex;
   align-items: flex-start;
-  padding: 50px 0;
-  padding-bottom: 60px;
+  padding: 50px 0 10px 0;
 }
 .movie-details img {
   max-width: 25%;
@@ -86,11 +85,11 @@
 }
 .sort select option {
   color: white;
-  background-color: #1E3046;
+  background-color: #1e3046;
 }
 .sort select {
   padding: 4px;
-  border: 2px solid #586E88;
+  border: 2px solid #586e88;
   border-radius: 5px;
   font-size: 16px;
 }
@@ -129,10 +128,6 @@
 .router {
   text-decoration: none;
   color: inherit;
-}
-
-.indent {
-  margin-bottom: 10%;
 }
 
 /*# sourceMappingURL=styles.css.map */

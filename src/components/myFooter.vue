@@ -1,7 +1,7 @@
 <template>
   <v-footer
     color="#1E3046"
-    class="footer"
+    style="max-height: 100px;"
   >
     <v-row
       justify="center"

@@ -1,24 +1,21 @@
 // Plugins
-import { registerPlugins } from '@/plugins'
+import { registerPlugins } from "@/plugins";
 
 // Components
-import App from './App.vue'
-import router from '@/router/router.js'
-import { createPinia } from 'pinia'
+import App from "./App.vue";
+import router from "@/router/router.js";
+import { createPinia } from "pinia";
 
 // Methods
-import { goToMoviePage } from '@/services/goToMoviePage.js';
+import { goToMoviePage } from "@/services/goToMoviePage.js";
 
 // Composables
-import { createApp } from 'vue'
-import '@/styles/styles.css'
+import { createApp } from "vue";
+import "@/styles/styles.css";
 
-const app = createApp(App)
-const pinia = createPinia()
+const app = createApp(App);
+const pinia = createPinia();
 
-registerPlugins(app)
+registerPlugins(app);
 app.config.globalProperties.$goToMoviePage = goToMoviePage;
-app
-.use(router)
-.use(pinia)
-.mount('#app')
+app.use(router).use(pinia).mount("#app");

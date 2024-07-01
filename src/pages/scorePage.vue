@@ -1,5 +1,8 @@
 <template>
-  <div class="background">
+  <div
+    class="background"
+    style="height: 100%;"
+  >
     <h2 class="head-text">
       Оцененные фильмы
     </h2>
@@ -51,6 +54,7 @@
                         readonly
                         hover
                         length="10"
+                        color="yellow"
                         size="small"
                         class="my-rate"
                       />
@@ -89,7 +93,6 @@
       loadRatedMovies() {
         const scoredRatings = JSON.parse(localStorage.getItem("movieRatings")) || [];
         this.ratedMovies = scoredRatings.map(item => ({ movie: item.movie, rating: item.rating }));
-        console.log('Загруженные оцененные фильмы:', this.ratedMovies);
       },
       loadSavedRating() {
         const movieId = this.movie.id;

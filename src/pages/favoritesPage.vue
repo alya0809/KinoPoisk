@@ -1,5 +1,8 @@
 <template>
-  <div class="background">
+  <div
+    class="background"
+    style="height: 100%;"
+  >
     <h2 class="head-text">
       Избранные фильмы
     </h2>
@@ -97,6 +100,7 @@ export default {
   data() {
     return {
       favoriteMovies: [],
+      sortBy: "",
       sortDirection: "asc",
     };
   },
@@ -122,9 +126,9 @@ export default {
     },
     sortMovies() {
       this.favoriteMovies = sortMovies(
-        this.favoriteMovies,
-        this.sortBy,
-        this.sortDirection
+      this.favoriteMovies,
+      this.sortBy,
+      this.sortDirection
       );
     },
     toggleSortDirection() {

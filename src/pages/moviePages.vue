@@ -1,5 +1,8 @@
 <template>
-  <div class="background">
+  <div
+    class="background"
+    style="height: 100%;"
+  >
     <v-container>
       <div class="movie-details">
         <img
@@ -22,6 +25,7 @@
             half-increments
             hover
             length="10"
+            color="yellow"
             size="small"
             @click="saveRating"
           />
@@ -84,7 +88,7 @@
             </div>
           </v-expansion-panel-text>
         </v-expansion-panel>
-        <v-expansion-panel class="background indent">
+        <v-expansion-panel class="background">
           <v-expansion-panel-title>
             Где посмотреть
           </v-expansion-panel-title>
@@ -128,7 +132,7 @@ export default {
   data() {
     return {
       movie: null,
-      panel: [],
+      panel: [0],
       ratingKp: null,
       ratingImdb: null,
       watchabilities: null,
@@ -197,7 +201,6 @@ export default {
         }
       movieRatings = ratingList;
       localStorage.setItem('movieRatings', JSON.stringify(movieRatings));
-      console.log('Рейтинг для фильма с ID ' + this.movie.id + ' сохранен в localStorage:', this.movieRating);
     },
     loadSavedRating() {
       const movieId = this.movie.id;

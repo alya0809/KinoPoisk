@@ -1,5 +1,8 @@
 <template>
-  <div class="background">
+  <div
+    class="background"
+    style="height: 100%;"
+  >
     <v-container class="content">
       <v-container class="d-flex align-center justify-content-center text-center header">
         <h1 class="head-text">
@@ -59,7 +62,11 @@
         <v-col
           v-for="movie in paginatedMovies"
           :key="movie.id"
-          cols="2"
+          :cols="12"
+          :sm="5"
+          :md="4"
+          :lg="2"
+          :xl="2"
         >
           <v-card
             class="main-card"
